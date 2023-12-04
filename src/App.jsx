@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useSignInWithMicrosoft } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./App.css";
 import { auth, databaseapp } from "./services/firebaseConfig";
@@ -71,11 +73,8 @@ export const ChatRoom = () => {
   );
 };
 
-// eslint-disable-next-line react/prop-types
 export const ChatMessage = ({ message }) => {
-  // eslint-disable-next-line react/prop-types
   const { text, photoURL, uid } = message;
-
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
   return (
@@ -88,11 +87,17 @@ export const ChatMessage = ({ message }) => {
 
 export const SignIn = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signInWithMicrosoft] = useSignInWithMicrosoft(auth);
 
   return (
-    <button className="sign-in" onClick={() => signInWithGoogle()}>
-      Logar com o Google
-    </button>
+    <div>
+      <button className="sign-in" onClick={() => signInWithGoogle()}>
+        Logar com o Google
+      </button>
+      <button className="sign-in" onClick={() => signInWithMicrosoft()}>
+        Logar com a Microsoft
+      </button>
+    </div>
   );
 };
 
